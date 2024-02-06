@@ -15,17 +15,21 @@ import java.util.StringTokenizer;
  * 안쪽 배열을 돌린다.
  */
 public class Main {
-	//배열을 돌리는 메서드
+	//배열을 상하반전
 	public static int[][] verticalReverse(int n, int m, int map[][])
 	{	
+		//복사되어 리턴될 배열
 		int tmp[][] = new int[n][m];
+		//복사할 배열의 y위치 반대로하고 저장
 		for(int i = 0 ; i <n;i++) {
 			tmp[i] = map[n-i-1];
 		}
 		return tmp;
 	}
+	//배열 좌우 반전
 	public static int[][] horizontalReverse(int n, int m, int map[][])
 	{	
+		//tmp를 사용하여 map행의 처음과 끝값 하나씩 서로 바꿔주었다.
 		for(int i = 0 ; i <n;i++) {
 			for(int j=0; j<m/2;j++) {
 				int tmp = map[i][j];
@@ -35,10 +39,12 @@ public class Main {
 		}
 		return map;
 	}
+	//배열 오른쪽 90도 회전
 	public static int[][] rotateR90(int n, int m, int map[][])
 	{	
-		
+		//복사되어 리턴될 배열 n과 m크기를 바꿈
 		int tmp[][] = new int[m][n];
+		//열을 고정시키고 n-1-i부터 계속 값을 넣어줌
 		for(int i = 0 ; i <n;i++) {
 			for(int j=0; j<m;j++) {
 				tmp[j][n-1-i] = map[i][j]; 
@@ -46,10 +52,12 @@ public class Main {
 		}
 		return tmp;
 	}
+	//배열 왼쪽 90도 회전
 	public static int[][] rotateL90(int n, int m, int map[][])
 	{	
-		
+		//복사되어 리턴될 배열 n과 m크기를 바꿈
 		int tmp[][] = new int[m][n];
+		//행을 고정시키고  m-1-j부터 값을 넣어줌
 		for(int i = 0 ; i <n;i++) {
 			for(int j=0; j<m;j++) {
 				tmp[m-1-j][i] = map[i][j]; 
@@ -59,14 +67,18 @@ public class Main {
 	}
 	public static int[][] moveGroup(int n, int m, int map[][])
 	{	
-		
+		//복사되어 리턴될 배열
 		int tmp[][] = new int[n][m];
+		//n/2, m/2로 축소된 범위를 순회
 		for(int i = 0 ; i <n/2;i++) {
 			for(int j=0; j<m/2;j++) {
-				
+				//1->2
 				tmp[i][m/2+j] = map[i][j];
-				tmp[n/2+i][m/2+j] = map[i][m/2+j]; 
-				tmp[n/2+i][j] = map[n/2+i][m/2+j]; 
+				//2->3
+				tmp[n/2+i][m/2+j] = map[i][m/2+j];
+				//3->4
+				tmp[n/2+i][j] = map[n/2+i][m/2+j];
+				//4->1
 				tmp[i][j] = map[n/2+i][j];
 				
 			}
@@ -75,13 +87,18 @@ public class Main {
 	}
 	public static int[][] moveGroup2(int n, int m, int map[][])
 	{	
-		
+		//복사되어 리턴될 배열
 		int tmp[][] = new int[n][m];
+		//n/2, m/2로 축소된 범위를 순회
 		for(int i = 0 ; i <n/2;i++) {
 			for(int j=0; j<m/2;j++) {
+				//1->4
 				tmp[n/2+i][j] = map[i][j];
+				//4->3
 				tmp[n/2+i][m/2+j] = map[n/2+i][j];
-				tmp[i][m/2+j] = map[n/2+i][m/2+j]; 
+				//3->2
+				tmp[i][m/2+j] = map[n/2+i][m/2+j];
+				//2->1
 				tmp[i][j] = map[i][m/2+j]; 
 			}
 		}
@@ -110,10 +127,14 @@ public class Main {
 				map[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
+		//스트링토크나이저 객체생성
 		st = new StringTokenizer(br.readLine());
+		//실행할 연산 번호 
 		int op;
 		for(int i=0 ; i<r;i++) {
+			//연산 번호 입력
 			op = Integer.parseInt(st.nextToken());
+			//연산번호에 따라 다른 메서드 ㅈ
 			switch (op) {
 			case 1:
 				map =verticalReverse(map.length,map[0].length,map);
