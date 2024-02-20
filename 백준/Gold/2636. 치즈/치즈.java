@@ -1,6 +1,15 @@
 import java.io.*;
 import java.util.*;
-
+/**
+ * 문제: Main_4963_섬의개수
+ * 결과: 맞았습니다!
+ * 메모리:93720kb
+ * 실행시간: 164ms
+ * @author 서동인
+ * 아이디어: bfs를 활용하여 맵에 1을 찾아 상하좌우 모두 확인해서 해당 위치가 0이라면
+ * 큐에 넣는다. ㅇ
+ * 
+ */
 public class Main {
 
 	static int[] dx = {1,-1,0,0};
@@ -38,12 +47,6 @@ public class Main {
 					else if(map[i][j]==1 && isOver) isOver=false;
 				}
 			}
-			/*for(int row[] : map) {
-				for(int num : row) {
-					System.out.print(num + " ");
-				}
-				System.out.println();
-			}*/
 			turn++;
 		}
 		System.out.println(turn);
@@ -80,6 +83,8 @@ public class Main {
 			}
 			if(check) {
 				inspect++;
+			}else {
+				break;
 			}
 		}
 		if(inspect==4) {
