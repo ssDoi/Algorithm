@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+
 /**
  * 문제:D4_1238_Contact
  * 결과:pass
@@ -43,11 +44,10 @@ public class Solution {
 			q.offer(start);
 			boolean visited[] = new boolean[101];
 			visited[start] =true;
-			//bfs방문과정을 담는 리스트
-			ArrayList<Integer> list = new ArrayList<>();
 			//bfs시 임시로 값을 담는 리스트
 			ArrayList<Integer> tmp = new ArrayList<>();
 			//큐가 빌때까지
+			int max=0;
 			while(!q.isEmpty()) {
 				//큐의 값 불러오기
 				int index=q.poll();
@@ -56,40 +56,21 @@ public class Solution {
 					if(!visited[i] && adjMatrix[index][i] ==1) {
 						//리스트와 임시리스트에 값을 넣고 방문처리
 						tmp.add(i);
-						list.add(i);
 						visited[i] = true;
 					}
 				}
 				//큐가 비었고 리스트에 값이 남아있다면
 				if(q.isEmpty() && !tmp.isEmpty()) {
 					//큐에 리스트값 전부 넣어줌
+					max=0;
 					for(int num : tmp) {
 						q.offer(num);
+						max=Math.max(max, num);
 					}
 					//리스트 클리어
 					tmp.clear();
 					//101을 넣어 깊이 구분
-					list.add(101);
 				}
-			}
-			//마지막 깊이를 담을 배열
-			ArrayList<Integer> arr = new ArrayList<>();
-			//리스트 만큼 반복
-			for(int i=0 ; i <list.size();i++) {
-				//리스트값이 101이 아니면 저장
-				if(list.get(i) !=101) {
-					arr.add(list.get(i));
-				}
-				//마지막 101이 아닌 101인 경우 arr의 값을 날림
-				if(i!=list.size()-1 && list.get(i) ==101) {
-					arr.clear();
-				}
-			}
-			//마지막깊이의 최대값
-			int max = 0;
-			//최대값 갱신
-			for(int num: arr ) {
-				max = Math.max(max, num);
 			}
 			//값 출력
 			System.out.println("#" + test_case+ " " + max);
