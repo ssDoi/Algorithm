@@ -60,18 +60,15 @@ public class Main {
 			}
 		}
 		int dBit = hBit | vBit | aBit;
-		ArrayList<Integer> v = new ArrayList<>();
 		for(int i=1;i<=9;i++) {
 			if((dBit&(1<<i)) ==0) {
-				v.add(i);
+				
+				map[y][x] = i;
+				visited[y][x]= true;
+				check(map,visited);
+				map[y][x] = 0;
+				visited[y][x]= false;
 			}
-		}
-		for(int i=0;i<v.size();i++) {
-			map[y][x] = v.get(i);
-			visited[y][x]= true;
-			check(map,visited);
-			map[y][x] = 0;
-			visited[y][x]= false;
 		}
 		
 	}
