@@ -13,21 +13,27 @@ public class Solution {
 			int n = Integer.parseInt(br.readLine());
 			st = new StringTokenizer(br.readLine());
 			int[] list = new int[n+1];
-			int LIS[] = new int[n+1];
 			for(int i=1; i<n+1; i++){
 				list[i] = Integer.parseInt(st.nextToken());
 			}
-			int max = 0;
-			for(int i=1; i<n+1;i++){
-				LIS[i] =1;
-				for(int j=1; j<=i-1; j++){
-					if(list[i] > list[j] && LIS[i] < LIS[j] +1){
-						LIS[i] = LIS[j] +1;
+			
+
+			ArrayList<Integer> d= new ArrayList<>();
+			d.add(list[1]);
+			for(int i=2; i<n+1; i++) {
+				if(list[i] > d.get(d.size()-1)) {
+					d.add(list[i]);
+				}else {
+					for(int j=0; j<d.size(); j++) {
+						if(list[i] <= d.get(j)) {
+							d.set(j, list[i]);
+							break;
+						}
 					}
-					max = Math.max(LIS[i], max);
 				}
+				
 			}
-			System.out.println("#" + tc+" " + max);
+			System.out.println("#" + tc+" " + d.size());
 		}
 	}
 
