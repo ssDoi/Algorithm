@@ -20,14 +20,6 @@ public class Solution {
 
 
 	}
-    // 팩토리얼을 구하는 메서드
-    public static long factorial(int n, int p) {
-        long result = 1;
-        for (int i = 2; i <= n; i++) {
-            result = (result * i) % p;
-        }
-        return result;
-    }
 
     // 페르마의 소정리를 사용하여 역원을 구하는 메서드
     public static long modularInverse(long a, int p) {
@@ -41,10 +33,13 @@ public class Solution {
 
     // 조합의 경우의 수를 구하는 메서드
     public static long combination(int n, int k, int p) {
-        long numerator = factorial(n, p);
-        long denominator = (factorial(k, p) * factorial(n - k, p)) % p;
-        long inverseDenominator = modularInverse(denominator, p);
-        return (numerator * inverseDenominator) % p;
+        long[] fac = new long[n+1];
+        fac[1] = 1;
+        for(int i=2;i<n+1;i++) {
+        	fac[i] = fac[i-1] *i %p;
+        }
+        long inverseDenominator = modularInverse((fac[k] * fac[n-k])%p, p);
+        return (fac[n] * inverseDenominator) % p;
     }
 
 }
