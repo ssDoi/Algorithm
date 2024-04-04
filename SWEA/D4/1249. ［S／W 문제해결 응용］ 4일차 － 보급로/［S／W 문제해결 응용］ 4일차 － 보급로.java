@@ -17,13 +17,13 @@ public class Solution {
 	public static class Road{
 		int y;
 		int x;
-		int weight;
+		//int weight;
 
-		public Road(int y, int x, int weight) {
+		public Road(int y, int x) {
 			super();
 			this.y = y;
 			this.x = x;
-			this.weight = weight;
+			//this.weight = weight;
 		}
 
 
@@ -61,7 +61,7 @@ public class Solution {
 			//Road객체를 저장할 큐
 			Queue<Road> q = new ArrayDeque<>();
 			//처음위치, 처음위치에서 처음위치까지의 비용은 0이므로 0,0,0으로 객체생성하여 큐에 넣음
-			q.add(new Road(0,0,0));
+			q.add(new Road(0,0));
 			//큐가 빌 때까지 반복
 			while(!q.isEmpty()) {
 				//큐에 값을 가져온다.
@@ -73,9 +73,9 @@ public class Solution {
 					//4방의 위치가 범위안에 있고
 					if(nx>=0 && ny>=0 && nx<n && ny<n) {
 						//dp의 해당값이 map의 해당값 + 이제까지 누적된 weight보다 크다면 dp배열 갱신하고 q에 넣는다.
-						if(dp[ny][nx] > map[ny][nx] + road.weight){
-							dp[ny][nx] =map[ny][nx] +road.weight;
-							q.add(new Road(ny,nx,dp[ny][nx]));
+						if(dp[ny][nx] > map[ny][nx] + dp[road.y][road.x]){
+							dp[ny][nx] =map[ny][nx] +dp[road.y][road.x];
+							q.add(new Road(ny,nx));
 						}
 					}
 				}
