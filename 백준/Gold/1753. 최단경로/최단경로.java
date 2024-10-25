@@ -1,68 +1,67 @@
 import java.io.*;
-import java.util.*;;
+import java.util.*;
 public class Main {
+    static List<List<Edge>> graph;
+    static class Edge{
+        int v;
+        int w;
+        public Edge(int v, int w) {
 
-	static Node[] adjList;
-	public static class Node{
-		int Vertex;
-		int weight;
-		Node next;
-		Node(int Vertex ,int weight, Node next){
-			this.Vertex = Vertex;
-			this.weight = weight;
-			this.next  = next;
-		}
-	}
-	public static void main(String[] args) throws Exception{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		final int INF = Integer.MAX_VALUE;
-		int V = Integer.parseInt(st.nextToken());
-		int E = Integer.parseInt(st.nextToken());
-		int K = Integer.parseInt(br.readLine());
-		adjList = new Node[V+1];
-		for(int i=0; i<E;i++) {
-			st = new StringTokenizer(br.readLine());
-			int from = Integer.parseInt(st.nextToken());
-			int to = Integer.parseInt(st.nextToken());
-			int w = Integer.parseInt(st.nextToken());
-			adjList[from] = new Node(to,w, adjList[from]);
-		}
-		int minDistance[] = new int[V+1];
-		Arrays.fill(minDistance, INF);
-		minDistance[K] =0;
-		boolean[] visited = new boolean[V+1];
-		int min = 0;
-		int minVertex = 0;
-		int c;
-		for(c=1 ; c<V+1;c++) {
-			min = Integer.MAX_VALUE;
-			minVertex = -1;
-			
-			for(int i=1; i<V+1;i++) {
-				if(!visited[i] &&min > minDistance[i]) {
-					min = minDistance[i];
-					minVertex = i; 
-				}
-			}
-			if(minVertex==-1) {
-				break;
-			}
-			visited[minVertex] = true;
-			for(Node temp = adjList[minVertex]; temp !=null ; temp = temp.next) {
-				if(minDistance[temp.Vertex] > min + temp.weight) {
-					minDistance[temp.Vertex] = min + temp.weight;
-				}
-			}
-			
-		}
-		for(int i=1;i<V+1;i++) {
-			if(minDistance[i] ==Integer.MAX_VALUE) {
-				System.out.println("INF");
-				continue;
-			}
-			System.out.println(minDistance[i]);
-		}
-	}
+            this.v = v;
+            this.w = w;
+        }
+    }
+    public static void main(String[] args)  throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
+        int V= Integer.parseInt(st.nextToken());
+        int E= Integer.parseInt(st.nextToken());
+        int start= Integer.parseInt(br.readLine());
+        int[] mindist = new int[V+1];
+        graph = new ArrayList<>();
+        for(int i=0;i<V+1;i++){
+            graph.add(new ArrayList<>());
+        }
+
+        for(int i=0;i<E;i++){
+            st=new StringTokenizer(br.readLine());
+            int u= Integer.parseInt(st.nextToken());
+            int v= Integer.parseInt(st.nextToken());
+            int w= Integer.parseInt(st.nextToken());
+            graph.get(u).add(new Edge(v,w));
+        }
+
+
+        Arrays.fill(mindist,Integer.MAX_VALUE);
+        mindist[start]=0;
+
+        PriorityQueue<Edge> q = new PriorityQueue<>((o1, o2) -> Integer.compare(o1.w,o2.w));
+        q.offer(new Edge(start,0));
+        while(!q.isEmpty()){
+            Edge e = q.poll();
+            int v=e.v;
+            int w=e.w;
+            if(mindist[v] < w){
+                continue;
+            }
+            for(int i=0;i<graph.get(v).size();i++){
+                int ev = graph.get(v).get(i).v;
+                int ew = graph.get(v).get(i).w;
+                if(mindist[ev]> w + ew){
+                    mindist[ev] = w + ew;
+                    q.offer(new Edge(ev,mindist[ev]));
+                }
+            }
+        }
+
+        for(int i=1;i<V+1;i++){
+            if(mindist[i]==Integer.MAX_VALUE){
+                System.out.println("INF");
+            }else {
+                System.out.println(mindist[i]);
+            }
+        }
+
+    }
 }
