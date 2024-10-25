@@ -1,12 +1,16 @@
 import java.io.*;
 import java.util.*;
-
+/*
+    Dp사용
+    각 트리의 노드를 골랐을 경우의 최댓값을 고른다.
+    각 노드의 트리를 골랐을 경우는 전 층에서 그 노드의 부모를 골랐다는 듯
+    전층의 부모의 위치 = 지금 노드의 위치 혹은 노드의 위치-1
+    마지막 번째 노드는 부모가 자신 노드의 위치-1
+ */
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int sum = 0;
-        int layer =1;
 
         int[][] dp = new int[n+1][];
         int[][] tree = new int[n+1][];
